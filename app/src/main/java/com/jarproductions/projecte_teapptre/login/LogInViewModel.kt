@@ -1,4 +1,6 @@
 package com.jarproductions.projecte_teapptre.login
 
-class LogInViewModel {
+import androidx.lifecycle.ViewModel
+
+class LogInViewModel : ViewModel() {
 }
