@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Projecte_Teapptre</string>
+    <string name="teapptre">TEAPPTRE</string>
+    <string name="inicia_sessio">Inicia Sessió</string>
+    <string name="crea_un_compte">Crea un compte</string>
+    <string name="encara_no_tens_comptre">Encara no tens comptre?</string>
+    <string name="registre">Registre</string>
+    <string name="name">Nom</string>
+    <string name="repeteix_la_contrasenya">Repeteix la contrasenya</string>
+    <string name="contrasenya">Contrasenya</string>
+    <string name="email">Email</string>
+    <string name="ja_tens_un_usuari">Ja tens un usuari?</string>
+    <string name="inicia_sessi">Inicia Sessió</string>
+</resources>

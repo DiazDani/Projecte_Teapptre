@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1056260519761",
+    "project_id": "teapptre",
+    "storage_bucket": "teapptre.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056260519761:android:23284aa2faddd76f79c570",
+        "android_client_info": {
+          "package_name": "com.jarproductions.projecte_teapptre"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfK3Vr432B6vXGJkf68GfZenOhJJ4r22k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
