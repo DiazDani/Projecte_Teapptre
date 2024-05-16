@@ -11,4 +11,6 @@
     <string name="email">Email</string>
     <string name="ja_tens_un_usuari">Ja tens un usuari?</string>
     <string name="inicia_sessi">Inicia Sessió</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
