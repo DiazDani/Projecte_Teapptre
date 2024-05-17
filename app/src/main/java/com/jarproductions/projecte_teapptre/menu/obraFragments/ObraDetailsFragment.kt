@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jarproductions.projecte_teapptre.R
 import com.jarproductions.projecte_teapptre.databinding.FragmentObradetailsBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.random.Random
 
 class ObraDetailsFragment : Fragment() {
@@ -40,7 +42,12 @@ class ObraDetailsFragment : Fragment() {
             .addOnSuccessListener { document ->
                 val nombreObra = document.getString("nombre") ?: ""
                 val fechaTimestamp = document.getTimestamp("fecha")
-                val fecha = fechaTimestamp?.toDate().toString()
+                val fecha = if (fechaTimestamp != null) {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+                    dateFormat.format(fechaTimestamp.toDate())
+                } else {
+                    ""
+                }
 
                 binding.titleTextView.text = nombreObra
                 binding.theaterNameTextView.text = fecha

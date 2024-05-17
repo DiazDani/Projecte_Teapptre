@@ -38,7 +38,7 @@ class ObraViewHolder(private val binding: ObraItemBinding) : RecyclerView.ViewHo
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return try {
             val parsedDate = sdf.parse(date)
-            SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(parsedDate)
+            SimpleDateFormat("dd MMMM , yyyy", Locale.getDefault()).format(parsedDate)
         } catch (e: ParseException) {
             "Fecha no disponible"
         }
