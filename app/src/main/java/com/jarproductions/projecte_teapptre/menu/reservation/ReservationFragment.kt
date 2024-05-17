@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jarproductions.projecte_teapptre.R
 import com.jarproductions.projecte_teapptre.databinding.FragmentReservationBinding
-import com.jarproductions.projecte_teapptre.menu.obraFragments.ObraDetailsFragment
 import com.jarproductions.projecte_teapptre.menu.reservation.ReservationAdapter
 import com.jarproductions.projecte_teapptre.reservaTings.Reserva
 import java.text.SimpleDateFormat

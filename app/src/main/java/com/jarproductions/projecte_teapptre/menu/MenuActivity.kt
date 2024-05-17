@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.jarproductions.projecte_teapptre.obraThings.Obra
 import com.jarproductions.projecte_teapptre.obraThings.ObraAdapter
 import com.jarproductions.projecte_teapptre.R
-import com.jarproductions.projecte_teapptre.menu.obraFragments.ObraDetailsFragment
 import com.jarproductions.projecte_teapptre.menu.obraFragments.ObrasListFragment
 import com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment
 
