@@ -3,6 +3,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jarproductions.projecte_teapptre.R
@@ -42,14 +43,24 @@ class ObraDetailsFragment : Fragment() {
             .addOnSuccessListener { document ->
                 val descripcion = document.getString("descripcion")
                 val asientosRestantes = document.getLong("asientos_restantes")
+                val portadaUrl = document.getString("portada")
                 binding.descTextView.text = descripcion
                 binding.seatsLeftTextView.text = "Asientos restantes: $asientosRestantes"
+
+                // Cargar la imagen de la portada utilizando Glide
+                if (portadaUrl != null) {
+                    Glide.with(this)
+                        .load(portadaUrl)
+                        .placeholder(null) // Elimina el placeholder
+                        .into(binding.largeImage)
+                } else {
+                    // Manejar caso de URL de portada nula
+                }
             }
             .addOnFailureListener { exception ->
                 // Manejar errores aquí
             }
     }
-
     private fun reserveSeat(obraNombre: String) {
         val currentUserEmail = FirebaseAuth.getInstance().currentUser?.email ?: ""
         firestore.collection("users")
