@@ -49,7 +49,6 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
                     reservas?.forEach { reservaMap ->
                         val nombre = reservaMap["reserva"]?.toString() ?: ""
                         val asientos = reservaMap["asiento"]?.toString() ?: ""
-                        // Cargar la fecha de la obra correspondiente
                         firestore.collection("obras")
                             .whereEqualTo("nombre", nombre)
                             .get()
@@ -57,7 +56,8 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
                                 obrasDocuments.forEach { obraDocument ->
                                     val fechaTimestamp = obraDocument["fecha"] as? com.google.firebase.Timestamp
                                     val fecha = formatDate(fechaTimestamp?.toDate())
-                                    val reserva = Reserva(nombre, fecha, asientos)
+                                    val portadaUrl = obraDocument.getString("portada") ?: "" // Obtén la URL de la imagen
+                                    val reserva = Reserva(nombre, fecha, asientos, portadaUrl)
                                     reservasList.add(reserva)
                                 }
                                 setupRecyclerView(reservasList)
@@ -72,7 +72,6 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
                 }
         }
     }
-
     private fun formatDate(date: Date?): String {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault())
         return date?.let { dateFormat.format(it) } ?: ""
@@ -81,10 +80,8 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
     private fun setupRecyclerView(reservas: List<Reserva>) {
         if (reservas.isNotEmpty()) {
             val adapter = ReservationAdapter(reservas, this)
-            // Aquí usamos la interfaz correcta
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             binding.recyclerView.adapter = adapter
-            Log.d("ReservationFragment", "Adapter attached successfully")
         } else {
             Log.e("ReservationFragment", "No hay datos para mostrar")
         }
