@@ -53,7 +53,7 @@ class Repository {
                         if (!task.isSuccessful) {
                             Toast.makeText(
                                 context,
-                                "El registre no ha funcionat!",
+                                "El registro no ha funcionado!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
@@ -62,16 +62,19 @@ class Repository {
                             val userData = hashMapOf(
                                 "name" to name,
                                 "email" to email,
+                                "foto" to "https://firebasestorage.googleapis.com/v0/b/teapptre.appspot.com/o/usuarios%2FIMG-20240109-WA0049.jpg?alt=media&token=42f0d190-1d79-427e-8d5b-68ef8adb4d3d",
+                                "reservas" to arrayListOf<String>() // Assuming reservas is an array of strings
                             )
 
                             userDocument.set(userData)
-                            Toast.makeText(context, "Registre realitzat", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Registro realizado", Toast.LENGTH_SHORT).show()
                             val intent = Intent(context, LogIn::class.java)
                             context.startActivity(intent)
                         }
                     }
             }
         }
+
     }
 
 
