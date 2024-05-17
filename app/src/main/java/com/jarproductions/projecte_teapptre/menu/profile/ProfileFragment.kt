@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jarproductions.projecte_teapptre.R
@@ -14,6 +16,7 @@ import com.jarproductions.projecte_teapptre.R
 class ProfileFragment : Fragment() {
     private lateinit var textViewName: TextView
     private lateinit var textViewEmail: TextView
+    private lateinit var imageView: ImageView
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
@@ -24,6 +27,7 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         textViewName = view.findViewById(R.id.textViewName)
         textViewEmail = view.findViewById(R.id.textViewEmail)
+        imageView = view.findViewById(R.id.imageView)
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         loadUserData()
@@ -40,30 +44,33 @@ class ProfileFragment : Fragment() {
                     if (document != null && document.exists()) {
                         val name = document.getString("name")
                         val email = document.getString("email")
-                        if (name != null && email != null) {
+                        val fotoUrl = document.getString("foto")
+                        if (name != null && email != null && fotoUrl != null) {
                             textViewName.text = name
                             textViewEmail.text = email
+                            Glide.with(this)
+                                .load(fotoUrl)
+                                .circleCrop() // Aquí se indica que se debe recortar la imagen en forma de círculo
+                                .into(imageView)
                         } else {
                             // Handle null values
-                            Log.e("com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment", "Name or email is null")
+                            Log.e("ProfileFragment", "Name, email, or fotoUrl is null")
                         }
                     } else {
                         // Document doesn't exist
-                        Log.e("com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment", "Document does not exist for user: ${user.uid}")
+                        Log.e("ProfileFragment", "Document does not exist for user: $userEmail")
                     }
                 }.addOnFailureListener { exception ->
                     // Handle error
-                    Log.e("com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment", "Error fetching document: $exception")
+                    Log.e("ProfileFragment", "Error fetching document: $exception")
                 }
             } else {
                 // User email is null
-                Log.e("com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment", "User email is null")
+                Log.e("ProfileFragment", "User email is null")
             }
         } ?: run {
             // Current user is null
-            Log.e("com.jarproductions.projecte_teapptre.menu.profile.ProfileFragment", "Current user is null")
+            Log.e("ProfileFragment", "Current user is null")
         }
     }
-
-
 }
