@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jarproductions.projecte_teapptre.R
 import com.jarproductions.projecte_teapptre.databinding.FragmentReservationBinding
+import com.jarproductions.projecte_teapptre.menu.obraFragments.ObraDetailsFragment
+import com.jarproductions.projecte_teapptre.menu.reservation.ReservationAdapter
 import com.jarproductions.projecte_teapptre.reservaTings.Reserva
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ReservationFragment : Fragment() {
+class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClickListener {
 
     private lateinit var binding: FragmentReservationBinding
     private val firestore = FirebaseFirestore.getInstance()
@@ -77,16 +80,27 @@ class ReservationFragment : Fragment() {
     }
 
     private fun setupRecyclerView(reservas: List<Reserva>) {
-        Log.e("castañas", "castañas")
-        // Verificar si hay datos para mostrar
         if (reservas.isNotEmpty()) {
-            val adapter = ReservationAdapter(reservas)
+            val adapter = ReservationAdapter(reservas, this)
+            // Aquí usamos la interfaz correcta
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             binding.recyclerView.adapter = adapter
             Log.d("ReservationFragment", "Adapter attached successfully")
         } else {
             Log.e("ReservationFragment", "No hay datos para mostrar")
         }
+    }
+
+    override fun onItemClick(reserva: Reserva) {
+        // Reemplazar el fragmento actual con ObraDetailsFragment
+        val fragment = ObraDetailsFragment.newInstance(
+            reserva.nombre, // Utilizamos el nombre de la reserva como referencia para el fragmento
+            "" // No estoy seguro de qué debería ir aquí
+        )
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragment)
+            .addToBackStack(null) // Permite volver al fragmento anterior al pulsar hacia atrás
+            .commit()
     }
 
 

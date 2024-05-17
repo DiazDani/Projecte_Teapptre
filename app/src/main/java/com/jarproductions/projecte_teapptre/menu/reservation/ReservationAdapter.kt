@@ -1,32 +1,38 @@
+package com.jarproductions.projecte_teapptre.menu.reservation
+
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jarproductions.projecte_teapptre.databinding.ReservationItemBinding
 import com.jarproductions.projecte_teapptre.reservaTings.Reserva
-import java.text.SimpleDateFormat
-import java.util.Locale
 
-class ReservationAdapter(private val reservas: List<Reserva>) :
+class ReservationAdapter(private val reservas: List<Reserva>, private val listener: OnReservationItemClickListener) :
     RecyclerView.Adapter<ReservationAdapter.ReservaViewHolder>() {
 
-    inner class ReservaViewHolder(private val binding: ReservationItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    interface OnReservationItemClickListener {
+        fun onItemClick(reserva: Reserva)
+    }
 
-        fun bind(reserva: Reserva) {
-            binding.apply {
-                nombreTextView.text = reserva.nombre // Aquí se muestra el nombre de la reserva
-                dateTextView.text = reserva.fecha // Aquí se muestra la fecha de la reserva
-                seatTextView.text = reserva.asientos // Aquí se muestra el número de asientos reservados
-            }
+    inner class ReservaViewHolder(private val binding: ReservationItemBinding) :
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.root.setOnClickListener(this)
         }
 
-        private fun formatDate(dateString: String): String {
-            if (dateString.isNotEmpty()) {
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-                val date = dateFormat.parse(dateString)
-                return dateFormat.format(date)
-            } else {
-                return "Fecha no disponible"
+        fun bind(reserva: Reserva) {
+            binding.nombreTextView.text = reserva.nombre
+            binding.dateTextView.text = reserva.fecha
+            binding.seatTextView.text = "Seat: ${reserva.asientos}"
+        }
+
+
+        override fun onClick(view: View) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val reserva = reservas[position]
+                listener.onItemClick(reserva)
             }
         }
     }
@@ -40,7 +46,8 @@ class ReservationAdapter(private val reservas: List<Reserva>) :
     }
 
     override fun onBindViewHolder(holder: ReservaViewHolder, position: Int) {
-        holder.bind(reservas[position])
+        val reserva = reservas[position]
+        holder.bind(reserva)
     }
 
     override fun getItemCount(): Int {
