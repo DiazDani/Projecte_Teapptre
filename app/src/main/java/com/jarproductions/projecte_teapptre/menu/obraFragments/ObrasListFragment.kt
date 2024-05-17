@@ -50,7 +50,8 @@ class ObrasListFragment : Fragment() {
                     val nombre = document.getString("nombre") ?: ""
                     val fecha = document.getDate("fecha")
                     val fechaString = formatDate(fecha)
-                    val obra = Obra(nombre, fechaString, 0, "", 0, " ")
+                    val portada = document.getString("portada") // Obtener la URL de la portada de la obra
+                    val obra = Obra(nombre, portada, 0, "", 0, fechaString) // Incluir la URL de la portada al crear el objeto Obra
                     obrasList.add(obra)
                 }
                 obraAdapter.setData(obrasList)

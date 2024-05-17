@@ -26,10 +26,7 @@ class ObraDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val nombre = arguments?.getString("nombre") ?: ""
-        val fecha = arguments?.getString("fecha") ?: ""
 
-        binding.titleTextView.text = nombre
-        binding.theaterNameTextView.text = fecha
 
         // Listener para el botón de reservar asiento
         binding.pickSeatButton.setOnClickListener {
@@ -41,6 +38,12 @@ class ObraDetailsFragment : Fragment() {
             .document(nombre)
             .get()
             .addOnSuccessListener { document ->
+                val nombreObra = document.getString("nombre") ?: ""
+                val fechaTimestamp = document.getTimestamp("fecha")
+                val fecha = fechaTimestamp?.toDate().toString()
+
+                binding.titleTextView.text = nombreObra
+                binding.theaterNameTextView.text = fecha
                 val descripcion = document.getString("descripcion")
                 val asientosRestantes = document.getLong("asientos_restantes")
                 val portadaUrl = document.getString("portada")

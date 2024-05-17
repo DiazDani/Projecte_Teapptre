@@ -3,7 +3,9 @@ package com.jarproductions.projecte_teapptre.obraThings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jarproductions.projecte_teapptre.databinding.ObraItemBinding
+import com.jarproductions.projecte_teapptre.obraThings.Obra
 
 class ObraAdapter(
     private var obraList: List<Obra>,
@@ -32,10 +34,10 @@ class ObraAdapter(
         obraList = newObraList
         notifyDataSetChanged()
     }
+
     interface OnObraClickListener {
         fun onObraClick(obra: Obra)
     }
-
 }
 
 
