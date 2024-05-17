@@ -8,10 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import com.jarproductions.projecte_teapptre.Obra
-import com.jarproductions.projecte_teapptre.User
 import com.jarproductions.projecte_teapptre.login.LogIn
-import kotlinx.coroutines.tasks.await
 
 
 class Repository {

@@ -1,4 +1,4 @@
-package com.jarproductions.projecte_teapptre
+package com.jarproductions.projecte_teapptre.obraThings
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

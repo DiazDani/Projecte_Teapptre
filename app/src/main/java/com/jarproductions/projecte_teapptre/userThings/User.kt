@@ -1,4 +1,4 @@
-package com.jarproductions.projecte_teapptre
+package com.jarproductions.projecte_teapptre.userThings
 
 data class User(
     val name: String,

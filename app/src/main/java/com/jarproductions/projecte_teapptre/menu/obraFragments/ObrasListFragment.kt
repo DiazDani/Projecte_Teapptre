@@ -1,11 +1,13 @@
+package com.jarproductions.projecte_teapptre.menu.obraFragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jarproductions.projecte_teapptre.Obra
-import com.jarproductions.projecte_teapptre.ObraAdapter
+import com.jarproductions.projecte_teapptre.obraThings.Obra
+import com.jarproductions.projecte_teapptre.obraThings.ObraAdapter
 import com.jarproductions.projecte_teapptre.databinding.FragmentObralistBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -48,7 +50,7 @@ class ObrasListFragment : Fragment() {
                     val nombre = document.getString("nombre") ?: ""
                     val fecha = document.getDate("fecha")
                     val fechaString = formatDate(fecha)
-                    val obra = Obra(nombre, fechaString)
+                    val obra = Obra(nombre, fechaString, 0, "", 0, " ")
                     obrasList.add(obra)
                 }
                 obraAdapter.setData(obrasList)
