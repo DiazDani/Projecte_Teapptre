@@ -25,7 +25,7 @@ class ReservationAdapter(private val reservas: List<Reserva>, private val listen
         fun bind(reserva: Reserva) {
             binding.nombreTextView.text = reserva.nombre
             binding.dateTextView.text = reserva.fecha
-            binding.seatTextView.text = "Seat: ${reserva.asientos}"
+            binding.seatTextView.text = "Seient: ${reserva.asientos}"
 
             // Cargar la imagen con Glide sin placeholder
             Glide.with(binding.imageView2.context)

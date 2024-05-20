@@ -12,6 +12,7 @@ import com.jarproductions.projecte_teapptre.databinding.FragmentObralistBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class ObrasListFragment : Fragment() {
 
@@ -49,10 +50,13 @@ class ObrasListFragment : Fragment() {
                 for (document in result) {
                     val nombre = document.getString("nombre") ?: ""
                     val fecha = document.getDate("fecha")
-                    val fechaString = formatDate(fecha)
-                    val portada = document.getString("portada") // Obtener la URL de la portada de la obra
-                    val obra = Obra(nombre, portada, 0, "", 0, fechaString) // Incluir la URL de la portada al crear el objeto Obra
-                    obrasList.add(obra)
+                    val asientosRestantes = document.getLong("asientos_restantes") ?: 0
+                    if (fecha != null && fecha.after(Date()) && asientosRestantes > 0) { // Filtrar por fecha y asientos restantes
+                        val fechaString = formatDate(fecha)
+                        val portada = document.getString("portada") ?: "" // Obtener la URL de la portada de la obra
+                        val obra = Obra(nombre, portada, 0, "", 0, fechaString) // Incluir la URL de la portada al crear el objeto Obra
+                        obrasList.add(obra)
+                    }
                 }
                 obraAdapter.setData(obrasList)
             }
@@ -65,7 +69,7 @@ class ObrasListFragment : Fragment() {
         if (date == null) {
             return ""
         }
-        val format = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         return format.format(date)
     }
 }

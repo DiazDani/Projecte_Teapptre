@@ -62,7 +62,7 @@ class Repository {
                             val userData = hashMapOf(
                                 "name" to name,
                                 "email" to email,
-                                "foto" to "https://firebasestorage.googleapis.com/v0/b/teapptre.appspot.com/o/usuarios%2FIMG-20240109-WA0049.jpg?alt=media&token=42f0d190-1d79-427e-8d5b-68ef8adb4d3d",
+                                "foto" to "https://firebasestorage.googleapis.com/v0/b/teapptre.appspot.com/o/usuarios%2Fperfil.jpg?alt=media&token=9edf54ef-92dd-4ee3-a41d-e54fa0ada8a0",
                                 "reservas" to arrayListOf<String>() // Assuming reservas is an array of strings
                             )
 

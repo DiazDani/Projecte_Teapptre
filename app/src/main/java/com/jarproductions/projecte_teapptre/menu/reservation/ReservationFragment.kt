@@ -3,12 +3,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jarproductions.projecte_teapptre.R
 import com.jarproductions.projecte_teapptre.databinding.FragmentReservationBinding
+import com.jarproductions.projecte_teapptre.menu.obraFragments.ObraDetailsFragment
 import com.jarproductions.projecte_teapptre.menu.reservation.ReservationAdapter
 import com.jarproductions.projecte_teapptre.reservaTings.Reserva
 import java.text.SimpleDateFormat
@@ -30,7 +33,6 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
         }
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,11 +56,14 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
                             .get()
                             .addOnSuccessListener { obrasDocuments ->
                                 obrasDocuments.forEach { obraDocument ->
-                                    val fechaTimestamp = obraDocument["fecha"] as? com.google.firebase.Timestamp
-                                    val fecha = formatDate(fechaTimestamp?.toDate())
-                                    val portadaUrl = obraDocument.getString("portada") ?: "" // Obtén la URL de la imagen
-                                    val reserva = Reserva(nombre, fecha, asientos, portadaUrl)
-                                    reservasList.add(reserva)
+                                    val fechaTimestamp = obraDocument["fecha"] as? Timestamp
+                                    val fecha = fechaTimestamp?.toDate()
+                                    if (fecha != null && fecha.after(Date())) {
+                                        val formattedFecha = formatDate(fecha)
+                                        val portadaUrl = obraDocument.getString("portada") ?: ""
+                                        val reserva = Reserva(nombre, formattedFecha, asientos, portadaUrl)
+                                        reservasList.add(reserva)
+                                    }
                                 }
                                 setupRecyclerView(reservasList)
                             }
@@ -70,10 +75,17 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
                 .addOnFailureListener { exception ->
                     Log.e("ReservationFragment", "Error al cargar las reservas: ${exception.message}")
                 }
+        } else {
+            Toast.makeText(
+                context,
+                "Ja has reservat un seient per aquesta obra!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
+
     private fun formatDate(date: Date?): String {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return date?.let { dateFormat.format(it) } ?: ""
     }
 
@@ -88,20 +100,13 @@ class ReservationFragment : Fragment(), ReservationAdapter.OnReservationItemClic
     }
 
     override fun onItemClick(reserva: Reserva) {
-        // Reemplazar el fragmento actual con ObraDetailsFragment
         val fragment = ObraDetailsFragment.newInstance(
-            reserva.nombre, // Utilizamos el nombre de la reserva como referencia para el fragmento
-            "" // No estoy seguro de qué debería ir aquí
+            reserva.nombre,
+            ""
         )
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, fragment)
-            .addToBackStack(null) // Permite volver al fragmento anterior al pulsar hacia atrás
+            .addToBackStack(null)
             .commit()
     }
-
-
-
-
-
-
 }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,8 +7,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/perfil"
-    android:layout_centerHorizontal="true"
-    android:layout_above="@id/textViewName" /> <!-- Colocar encima del nombre -->
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/textViewName" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -18,7 +17,7 @@
         android:text="Nombre"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true" /> <!-- Centrar verticalmente -->
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/textViewEmail"
@@ -27,5 +26,14 @@
         android:text="correo@example.com"
         android:textSize="16sp"
         android:layout_below="@id/textViewName"
-    android:layout_centerHorizontal="true" /> <!-- Centrar horizontalmente -->
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesió"
+        android:layout_below="@id/textViewEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>
